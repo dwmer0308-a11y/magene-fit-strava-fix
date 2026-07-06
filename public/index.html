@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>迈金 FIT 坐标修正</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="tool-panel" aria-labelledby="title">
+        <div class="title-row">
+          <div>
+            <p class="eyebrow">手机本地处理</p>
+            <h1 id="title">迈金 FIT 坐标修正</h1>
+          </div>
+          <span class="status-pill">不上传文件</span>
+        </div>
+
+        <div class="privacy-note">
+          <strong>FIT 只在当前浏览器里处理。</strong>
+          <span>网页只能读取你手动选择的文件，不会扫描手机里的其它内容。</span>
+        </div>
+
+        <div class="controls">
+          <label class="file-picker">
+            <span>选择 FIT 文件</span>
+            <input id="fitFiles" type="file" accept=".fit,.FIT,application/octet-stream" multiple>
+          </label>
+        </div>
+
+        <div id="message" class="message" role="status">选择从迈金 / 顽鹿导出的 FIT，页面会生成可手动上传 Strava 的修正 FIT。</div>
+
+        <section class="summary-grid" aria-label="处理摘要">
+          <div>
+            <span>文件</span>
+            <strong id="fileCount">-</strong>
+          </div>
+          <div>
+            <span>坐标记录</span>
+            <strong id="coordinateCount">-</strong>
+          </div>
+          <div>
+            <span>已修正</span>
+            <strong id="changedCount">-</strong>
+          </div>
+          <div>
+            <span>平均位移</span>
+            <strong id="averageShift">-</strong>
+          </div>
+          <div>
+            <span>CRC</span>
+            <strong id="crcStatus">-</strong>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button id="downloadAllBtn" type="button" disabled>下载修正 FIT</button>
+          <button id="shareBtn" type="button" disabled>分享修正 FIT</button>
+        </div>
+      </section>
+
+      <section class="detail-panel" aria-labelledby="resultsTitle">
+        <h2 id="resultsTitle">输出文件</h2>
+        <div id="resultList" class="result-list">
+          <p class="muted">尚未处理文件。</p>
+        </div>
+      </section>
+
+      <section class="detail-panel details-wide" aria-labelledby="detailsTitle">
+        <h2 id="detailsTitle">验证记录</h2>
+        <pre id="details">尚未处理文件。</pre>
+      </section>
+    </main>
+
+    <script src="app.js?v=20260706-mobile-fit"></script>
+  </body>
+</html>

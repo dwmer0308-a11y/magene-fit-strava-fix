@@ -1,0 +1,15 @@
+fixtures-private/fit/*
+!fixtures-private/fit/README.md
+outputs/*
+!outputs/README.md
+reports/
+THREAD.md
+*.fit
+*.FIT
+*.tcx
+*.gpx
+.env
+.env.*
+.DS_Store
+node_modules/
+*.log
