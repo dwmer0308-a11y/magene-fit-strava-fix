@@ -20,12 +20,14 @@
   var crcStatus = document.getElementById("crcStatus");
   var downloadAllBtn = document.getElementById("downloadAllBtn");
   var shareBtn = document.getElementById("shareBtn");
+  var openStravaBtn = document.getElementById("openStravaBtn");
   var resultList = document.getElementById("resultList");
   var details = document.getElementById("details");
 
   fileInput.addEventListener("change", handleFileChange);
   downloadAllBtn.addEventListener("click", downloadAll);
   shareBtn.addEventListener("click", shareAll);
+  openStravaBtn.addEventListener("click", openStravaUpload);
 
   if (!navigator.share) {
     shareBtn.disabled = true;
@@ -78,10 +80,11 @@
       downloadAllBtn.disabled = false;
       downloadAllBtn.textContent = successes.length === 1 ? "下载修正 FIT" : "下载全部修正 FIT";
       shareBtn.disabled = !canShareOutputs(successes);
+      openStravaBtn.disabled = false;
     }
 
     if (successes.length && !failures.length) {
-      setMessage("处理完成。下载修正 FIT 后，可以手动上传 Strava。", false);
+      setMessage("处理完成。可点“下载并打开 Strava”，然后在 Strava 页面选择刚下载的 FIT。", false);
     } else if (successes.length) {
       setMessage("部分文件处理完成，失败项见输出列表。", true);
     } else {
@@ -421,6 +424,7 @@
     processedOutputs = [];
     downloadAllBtn.disabled = true;
     shareBtn.disabled = true;
+    openStravaBtn.disabled = true;
     downloadAllBtn.textContent = "下载修正 FIT";
     fileCount.textContent = "-";
     coordinateCount.textContent = "-";
@@ -460,6 +464,11 @@
       files: files,
       title: files.length === 1 ? files[0].name : "修正后的 FIT"
     });
+  }
+
+  function openStravaUpload() {
+    downloadAll();
+    window.open("https://www.strava.com/upload/select", "_blank", "noopener");
   }
 
   function canShareOutputs(outputs) {
