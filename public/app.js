@@ -84,7 +84,7 @@
     }
 
     if (successes.length && !failures.length) {
-      setMessage("处理完成。可点“下载并打开 Strava”，然后在 Strava 页面选择刚下载的 FIT。", false);
+      setMessage("处理完成。可点“下载并进入 Strava 选文件”，然后在 Strava 页面选择刚下载的 FIT。", false);
     } else if (successes.length) {
       setMessage("部分文件处理完成，失败项见输出列表。", true);
     } else {
@@ -468,7 +468,7 @@
 
   function openStravaUpload() {
     downloadAll();
-    window.open("https://www.strava.com/upload/select", "_blank", "noopener");
+    window.open("https://www.strava.com/upload/files", "_blank", "noopener");
   }
 
   function canShareOutputs(outputs) {
