@@ -198,8 +198,8 @@ CRC：有效/异常
 
 ```text
 GitHub Pages 前端本地修正 FIT
--> 用户点一次“下载并进入 Strava 选文件”
--> 页面触发下载修正后的 FIT，并打开 https://www.strava.com/upload/files
+-> 用户点一次“下载并打开 Strava 上传”
+-> 页面触发下载修正后的 FIT，并打开 https://www.strava.com/upload/select
 -> 用户在 Strava 网页里手动选择修正 FIT 并保存
 ```
 
