@@ -2,6 +2,7 @@
   "use strict";
 
   var FIT_EPOCH_UNIX_OFFSET = 631065600;
+  var STRAVA_UPLOAD_URL = "https://www.strava.com/upload/select";
   var CRC_TABLE = [
     0x0000, 0xCC01, 0xD801, 0x1400,
     0xF001, 0x3C00, 0x2800, 0xE401,
@@ -19,19 +20,13 @@
   var averageShift = document.getElementById("averageShift");
   var crcStatus = document.getElementById("crcStatus");
   var downloadAllBtn = document.getElementById("downloadAllBtn");
-  var shareBtn = document.getElementById("shareBtn");
   var openStravaBtn = document.getElementById("openStravaBtn");
   var resultList = document.getElementById("resultList");
   var details = document.getElementById("details");
 
   fileInput.addEventListener("change", handleFileChange);
   downloadAllBtn.addEventListener("click", downloadAll);
-  shareBtn.addEventListener("click", shareAll);
   openStravaBtn.addEventListener("click", openStravaUpload);
-
-  if (!navigator.share) {
-    shareBtn.disabled = true;
-  }
 
   async function handleFileChange(event) {
     var files = Array.prototype.slice.call(event.target.files || []);
@@ -79,12 +74,11 @@
     if (successes.length) {
       downloadAllBtn.disabled = false;
       downloadAllBtn.textContent = successes.length === 1 ? "下载修正 FIT" : "下载全部修正 FIT";
-      shareBtn.disabled = !canShareOutputs(successes);
       openStravaBtn.disabled = false;
     }
 
     if (successes.length && !failures.length) {
-      setMessage("处理完成。可点“下载并打开 Strava 上传”，登录后在 Strava 页面选择刚下载的 FIT。", false);
+      setMessage("处理完成。点“下载修正 FIT”保存文件；再点“打开 Strava 上传”，到 Strava 页面手动选择刚下载的 FIT。", false);
     } else if (successes.length) {
       setMessage("部分文件处理完成，失败项见输出列表。", true);
     } else {
@@ -423,9 +417,9 @@
     revokeOutputs();
     processedOutputs = [];
     downloadAllBtn.disabled = true;
-    shareBtn.disabled = true;
     openStravaBtn.disabled = true;
     downloadAllBtn.textContent = "下载修正 FIT";
+    openStravaBtn.textContent = "打开 Strava 上传";
     fileCount.textContent = "-";
     coordinateCount.textContent = "-";
     changedCount.textContent = "-";
@@ -446,38 +440,11 @@
         downloadBlobUrl(output.fitUrl, output.outputName);
       }, index * 250);
     });
-  }
-
-  async function shareAll() {
-    if (!navigator.share || !processedOutputs.length) return;
-    var files = processedOutputs.map(function (output) {
-      return new File([output.fitBlob], output.outputName, { type: "application/octet-stream" });
-    });
-    if (navigator.canShare && !navigator.canShare({ files: files })) {
-      files = files.slice(0, 1);
-      if (!navigator.canShare({ files: files })) {
-        setMessage("当前浏览器不支持分享修正后的 FIT，请使用下载。", true);
-        return;
-      }
-    }
-    await navigator.share({
-      files: files,
-      title: files.length === 1 ? files[0].name : "修正后的 FIT"
-    });
+    setMessage("已触发下载。下载完成后，点“打开 Strava 上传”，在 Strava 文件选择器里找刚下载的修正 FIT。", false);
   }
 
   function openStravaUpload() {
-    downloadAll();
-    window.open("https://www.strava.com/upload/select", "_blank", "noopener");
-  }
-
-  function canShareOutputs(outputs) {
-    if (!navigator.share) return false;
-    if (!navigator.canShare) return true;
-    var files = outputs.map(function (output) {
-      return new File([output.fitBlob], output.outputName, { type: "application/octet-stream" });
-    });
-    return navigator.canShare({ files: files }) || navigator.canShare({ files: files.slice(0, 1) });
+    window.location.href = STRAVA_UPLOAD_URL;
   }
 
   function downloadBlobUrl(url, filename) {

@@ -5,7 +5,7 @@
 当前推荐使用纯前端手机网页：
 
 ```text
-手机打开网页 -> 选择 FIT -> 浏览器本地修正坐标 -> 点一次下载并打开 Strava 上传 -> 登录后手动选择修正 FIT
+手机打开网页 -> 上传 FIT -> 浏览器本地修正坐标 -> 下载修正 FIT -> 打开 Strava 上传 -> 手动选择修正 FIT
 ```
 
 这条路线不需要电脑在身边，不需要局域网服务，也不需要把 FIT 上传给服务器。网页只能读取你主动选择的 `.fit` 文件，不能扫描手机文件、相册或其它隐私内容。
@@ -13,24 +13,32 @@
 ## 手机使用
 
 1. 用手机打开部署后的网页。
-2. 点“选择 FIT 文件”。
+2. 点“上传 FIT 文件”。
 3. 选择从迈金 / 顽鹿导出的一个或多个 `.fit` 文件。
 4. 页面在浏览器本地完成 GCJ-02 -> WGS-84 坐标修正，并重算 FIT CRC。
-5. 点“下载并打开 Strava 上传”，网页会触发下载 `*.wgs84-fixed.fit`，并打开 Strava 上传入口。
-6. 如果 Safari 已登录 Strava，会直接进入上传页面；否则先用 Apple ID 或邮箱登录。
-7. 登录完成后，Strava 会回到上传入口。
-8. 点 Strava 页面里的文件选择按钮，选择刚下载的 `*.wgs84-fixed.fit`。
-9. 在 Strava 页面确认并保存活动。
+5. 点“下载修正 FIT”，保存 `*.wgs84-fixed.fit`。
+6. 点“打开 Strava 上传”。
+7. 如果 Safari 已登录 Strava，会直接进入上传页面；否则先用 Apple ID 或邮箱登录。
+8. 登录完成后，Strava 会回到上传入口。
+9. 点 Strava 页面里的文件选择按钮，在“最近项目 / 下载项 / Downloads”里选择刚下载的 `*.wgs84-fixed.fit`。
+10. 在 Strava 页面确认并保存活动。
 
 ## iPhone 快捷操作边界
 
 可以把本网页添加到主屏幕，也可以用快捷指令打开本网页或 Strava 上传页，但 iOS 和浏览器不允许脚本自动替用户填充网页的文件选择框。因此当前可做的是半自动：
 
 ```text
-转换完成 -> 点一次下载并打开 Strava 上传 -> 登录后用户手动选择文件并确认
+转换完成 -> 下载修正 FIT -> 打开 Strava 上传 -> 用户手动选择文件并确认
 ```
 
 这条路线不需要 Strava API app，不需要 Strava subscription，也不会把 FIT 或 token 交给第三方后端。
+
+## iPhone 文件选择建议
+
+- 点“下载修正 FIT”后，等 Safari 下载完成再进入 Strava。
+- 进入 Strava 后，文件选择器里优先看“最近项目 / 下载项 / Downloads”。
+- 找不到文件时，按输出列表里的完整文件名搜索，例如 `<原文件名>.wgs84-fixed.fit`。
+- 页面不会自动替你选择 Strava 文件框，也不会自动上传活动。
 
 ## 本地预览
 
@@ -89,7 +97,7 @@ python3 scripts/fix_fit_coordinates.py /path/to/*.fit --output-dir outputs
 - 第一版不发起 OAuth。
 - 第一版不上传 FIT 到服务器。
 - 第一版不保存、打印或写入 client secret、access token、refresh token、cookie。
-- “下载并打开 Strava 上传”只触发本地下载并打开 Strava 官方网页，不读取 Strava 登录态，也不代替用户上传。
+- “打开 Strava 上传”只打开 Strava 官方网页，不读取 Strava 登录态，也不代替用户选择文件或上传。
 - 真实 FIT 样本和输出 FIT 不进公开仓库。
 
 ## 后续增强

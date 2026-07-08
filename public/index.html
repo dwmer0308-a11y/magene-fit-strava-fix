@@ -24,12 +24,12 @@
 
         <div class="controls">
           <label class="file-picker">
-            <span>选择 FIT 文件</span>
+            <span>上传 FIT 文件</span>
             <input id="fitFiles" type="file" accept=".fit,.FIT,application/octet-stream" multiple>
           </label>
         </div>
 
-        <div id="message" class="message" role="status">选择从迈金 / 顽鹿导出的 FIT，页面会生成可手动上传 Strava 的修正 FIT。</div>
+        <div id="message" class="message" role="status">上传从迈金 / 顽鹿导出的 FIT，页面会生成可手动上传 Strava 的修正 FIT。</div>
 
         <section class="summary-grid" aria-label="处理摘要">
           <div>
@@ -56,8 +56,7 @@
 
         <div class="actions">
           <button id="downloadAllBtn" type="button" disabled>下载修正 FIT</button>
-          <button id="shareBtn" type="button" disabled>分享修正 FIT</button>
-          <button id="openStravaBtn" type="button" disabled>下载并打开 Strava 上传</button>
+          <button id="openStravaBtn" type="button" disabled>打开 Strava 上传</button>
         </div>
       </section>
 
@@ -74,6 +73,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=20260707-strava-upload-select"></script>
+    <script src="app.js?v=20260708-simple-buttons"></script>
   </body>
 </html>
