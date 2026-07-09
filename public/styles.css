@@ -42,18 +42,17 @@ input {
   width: 100%;
   min-height: 100vh;
   margin: 0 auto;
-  padding: max(28px, env(safe-area-inset-top)) 20px max(28px, env(safe-area-inset-bottom));
+  padding: max(28px, env(safe-area-inset-top)) 22px max(28px, env(safe-area-inset-bottom));
   display: grid;
   align-items: center;
-  justify-items: start;
+  justify-items: center;
   overflow-x: hidden;
 }
 
 .tool-panel {
   position: relative;
-  width: 100%;
-  max-width: 330px;
-  margin: 0;
+  width: min(360px, calc(100vw - 44px));
+  margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 30px;
   padding: 28px 18px 18px;
@@ -106,6 +105,8 @@ h1 {
 .file-picker,
 .actions button,
 .download-link {
+  position: relative;
+  overflow: hidden;
   min-height: 58px;
   width: 100%;
   border-radius: 18px;
@@ -120,11 +121,33 @@ h1 {
   letter-spacing: 0;
   box-shadow: 0 12px 30px rgba(44, 61, 72, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.72);
   -webkit-tap-highlight-color: transparent;
+  transform: translateZ(0);
+  transition: transform 150ms ease, background 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  backdrop-filter: blur(18px) saturate(1.16);
+  -webkit-backdrop-filter: blur(18px) saturate(1.16);
+}
+
+.file-picker::after,
+.actions button::after,
+.download-link::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 17px;
+  pointer-events: none;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.06) 54%, rgba(255, 255, 255, 0.22));
+  opacity: 0.64;
+  transition: opacity 150ms ease, background 150ms ease;
+}
+
+.file-picker span {
+  position: relative;
+  z-index: 1;
 }
 
 .file-picker {
   color: #fff;
-  background: linear-gradient(160deg, #315e72 0%, #24485b 100%);
+  background: linear-gradient(160deg, rgba(49, 94, 114, 0.94) 0%, rgba(36, 72, 91, 0.92) 100%);
 }
 
 .file-picker input {
@@ -146,7 +169,41 @@ h1 {
 
 #openStravaBtn {
   color: #fff;
-  background: linear-gradient(160deg, #f47b50 0%, #df5f3c 100%);
+  background: linear-gradient(160deg, rgba(244, 123, 80, 0.94) 0%, rgba(223, 95, 60, 0.92) 100%);
+}
+
+.file-picker:active,
+.file-picker[data-pressed="true"],
+.actions button:not(:disabled):active,
+.actions button[data-pressed="true"],
+.download-link:active {
+  transform: scale(0.982);
+  box-shadow: 0 8px 20px rgba(44, 61, 72, 0.1), inset 0 1px 6px rgba(255, 255, 255, 0.86);
+}
+
+.file-picker:active,
+.file-picker[data-pressed="true"] {
+  background: linear-gradient(160deg, rgba(49, 94, 114, 0.62) 0%, rgba(36, 72, 91, 0.52) 100%);
+}
+
+.actions button:not(:disabled):active,
+.actions button[data-pressed="true"],
+.download-link:active {
+  background: rgba(255, 255, 255, 0.46);
+}
+
+#openStravaBtn:active,
+#openStravaBtn[data-pressed="true"] {
+  background: linear-gradient(160deg, rgba(244, 123, 80, 0.64) 0%, rgba(223, 95, 60, 0.52) 100%);
+}
+
+.file-picker:active::after,
+.file-picker[data-pressed="true"]::after,
+.actions button:not(:disabled):active::after,
+.actions button[data-pressed="true"]::after,
+.download-link:active::after {
+  opacity: 1;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.12) 52%, rgba(255, 255, 255, 0.38));
 }
 
 .actions button:disabled {

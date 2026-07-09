@@ -13,6 +13,7 @@
   var processedOutputs = [];
 
   var fileInput = document.getElementById("fitFiles");
+  var filePicker = document.querySelector(".file-picker");
   var message = document.getElementById("message");
   var fileCount = document.getElementById("fileCount");
   var coordinateCount = document.getElementById("coordinateCount");
@@ -27,6 +28,9 @@
   fileInput.addEventListener("change", handleFileChange);
   downloadAllBtn.addEventListener("click", downloadAll);
   openStravaBtn.addEventListener("click", openStravaUpload);
+  bindPressFeedback(filePicker);
+  bindPressFeedback(downloadAllBtn);
+  bindPressFeedback(openStravaBtn);
 
   async function handleFileChange(event) {
     var files = Array.prototype.slice.call(event.target.files || []);
@@ -443,6 +447,23 @@
 
   function openStravaUpload() {
     window.location.href = STRAVA_UPLOAD_URL;
+  }
+
+  function bindPressFeedback(element) {
+    if (!element) return;
+
+    var clear = function () {
+      element.removeAttribute("data-pressed");
+    };
+
+    element.addEventListener("pointerdown", function () {
+      if (element.disabled) return;
+      element.setAttribute("data-pressed", "true");
+    });
+    element.addEventListener("pointerup", clear);
+    element.addEventListener("pointerleave", clear);
+    element.addEventListener("pointercancel", clear);
+    element.addEventListener("blur", clear);
   }
 
   function downloadBlobUrl(url, filename) {
