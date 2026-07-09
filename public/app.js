@@ -74,7 +74,6 @@
     if (successes.length) {
       downloadAllBtn.disabled = false;
       downloadAllBtn.textContent = successes.length === 1 ? "下载修正 FIT" : "下载全部修正 FIT";
-      openStravaBtn.disabled = false;
     }
 
     if (successes.length && !failures.length) {
@@ -417,7 +416,6 @@
     revokeOutputs();
     processedOutputs = [];
     downloadAllBtn.disabled = true;
-    openStravaBtn.disabled = true;
     downloadAllBtn.textContent = "下载修正 FIT";
     openStravaBtn.textContent = "打开 Strava 上传";
     fileCount.textContent = "-";
